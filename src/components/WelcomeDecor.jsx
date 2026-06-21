@@ -35,11 +35,11 @@ export default function WelcomeDecor({ onTryItOut }) {
         .strip-right { animation: floatRight 3s ease-in-out infinite; }
       `}</style>
 
-      {/* Photostrips */}
+ 
       <img src="/strip1.png" className="strip-left" style={{ position: "absolute", left: "10%", top: "25%", width: "200px" }} />
       <img src="/strip2.png" className="strip-right" style={{ position: "absolute", right: "10%", top: "25%", width: "200px" }} />
 
-      {/* --- White Card Container with Tape --- */}
+      
       <div style={{ position: "relative" }}>
         {/* White Tape */}
         <div
@@ -94,7 +94,7 @@ export default function WelcomeDecor({ onTryItOut }) {
               marginTop: 26,
               width: "100%",
               padding: "14px",
-              border: "2px solid #000000",
+              border: "2px solid #ffffff",
               background: "#e11d48",
               color: "#ffffff",
               fontWeight: 700,

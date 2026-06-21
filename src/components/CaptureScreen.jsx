@@ -29,13 +29,30 @@ export default function CaptureScreen({
   return (
     <div
       style={{
+        position: "relative", // Allows the flower to be positioned relative to this container
         display: "flex",
         flexWrap: "wrap",
         gap: 20,
         justifyContent: "center",
         alignItems: "flex-start",
+        paddingTop: "20px", // Added space to ensure the flower isn't cut off
       }}
     >
+    
+      <img
+        src="/flower.png"
+        alt="Decoration"
+        style={{
+          position: "absolute",
+          top: "-150px",
+          left: "0px",
+          width: "350px", 
+          height: "auto",
+          zIndex: 0, // Set to -1 if you want it behind the content, 0 or higher to be on top
+          pointerEvents: "none",
+        }}
+      />
+
       <div
         className="pb-fadeup"
         style={{
@@ -45,6 +62,7 @@ export default function CaptureScreen({
           padding: 22,
           width: 380,
           maxWidth: "100%",
+          zIndex: 1, // Ensures the box sits above the background flower
         }}
       >
         <div
@@ -88,6 +106,7 @@ export default function CaptureScreen({
                 display: "flex",
                 alignItems: "center",
                 justifyContent: "center",
+                zIndex: 30,
               }}
             >
               <X size={15} />
@@ -109,11 +128,10 @@ export default function CaptureScreen({
               }}
             >
               <Camera size={36} strokeWidth={1.5} />
-              <span style={{ fontSize: 13, opacity: 0.8 }}>
-                Camera is off
-              </span>
+              <span style={{ fontSize: 13, opacity: 0.8 }}>Camera is off</span>
             </div>
           )}
+          {/* ... [Rest of your existing video overlay code remains exactly the same] ... */}
           {countdown && (
             <div
               style={{
@@ -127,6 +145,7 @@ export default function CaptureScreen({
                 color: "#fff",
                 textShadow: "0 0 24px rgba(0,0,0,0.6)",
                 fontFamily: "Georgia, serif",
+                zIndex: 25,
               }}
             >
               {countdown}
@@ -138,6 +157,7 @@ export default function CaptureScreen({
                 position: "absolute",
                 inset: 0,
                 background: "#fff",
+                zIndex: 25,
               }}
             />
           )}
@@ -152,6 +172,7 @@ export default function CaptureScreen({
                 color: "#fff",
                 background: "rgba(0,0,0,0.45)",
                 padding: "3px 8px",
+                zIndex: 25,
               }}
             >
               {photos.length + 1} / {neededCount}
@@ -159,20 +180,13 @@ export default function CaptureScreen({
           )}
         </div>
 
+        {/* ... [Rest of your UI components: Layout chips, Toggles, Actions stay the same] ... */}
         {error && (
           <p style={{ color: RED, fontSize: 12, marginTop: 10 }}>{error}</p>
         )}
 
-        {/* Layout chips */}
         <div style={{ marginTop: 18 }}>
-          <div
-            style={{
-              fontSize: 11,
-              opacity: 0.6,
-              marginBottom: 6,
-              fontFamily: "ui-monospace, monospace",
-            }}
-          >
+          <div style={{ fontSize: 11, opacity: 0.6, marginBottom: 6, fontFamily: "ui-monospace, monospace" }}>
             LAYOUT
           </div>
           <div style={{ display: "flex", gap: 6, flexWrap: "wrap" }}>
@@ -191,7 +205,6 @@ export default function CaptureScreen({
           </div>
         </div>
 
-        {/* Toggles */}
         <div style={{ display: "flex", gap: 8, marginTop: 14 }}>
           <button
             className="pb-chip"
@@ -206,23 +219,14 @@ export default function CaptureScreen({
             className="pb-chip"
             data-active={flashOn}
             onClick={() => setFlashOn((f) => !f)}
-            style={{
-              padding: "6px 10px",
-              flex: 1,
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "center",
-              gap: 4,
-            }}
+            style={{ padding: "6px 10px", flex: 1, display: "flex", alignItems: "center", justifyContent: "center", gap: 4 }}
             title="Flash"
           >
             <Zap size={13} /> Flash
           </button>
           <button
             className="pb-chip"
-            onClick={() =>
-              setFacingMode((m) => (m === "user" ? "environment" : "user"))
-            }
+            onClick={() => setFacingMode((m) => (m === "user" ? "environment" : "user"))}
             style={{ padding: "6px 10px" }}
             title="Switch camera"
           >
@@ -230,61 +234,23 @@ export default function CaptureScreen({
           </button>
         </div>
 
-        {/* Action button */}
         <div style={{ marginTop: 18 }}>
           {!cameraOn ? (
-            <button
-              className="pb-btn pb-btn-primary"
-              onClick={startCamera}
-              style={{
-                width: "100%",
-                padding: "13px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: 8,
-                fontSize: 14,
-              }}
-            >
+            <button className="pb-btn pb-btn-primary" onClick={startCamera} style={{ width: "100%", padding: "13px", display: "flex", alignItems: "center", justifyContent: "center", gap: 8, fontSize: 14 }}>
               <Camera size={16} /> Turn on camera
             </button>
           ) : isCapturingSeq ? (
-            <button
-              className="pb-btn"
-              onClick={cancelSequence}
-              style={{
-                width: "100%",
-                padding: "13px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: 8,
-                fontSize: 14,
-              }}
-            >
+            <button className="pb-btn" onClick={cancelSequence} style={{ width: "100%", padding: "13px", display: "flex", alignItems: "center", justifyContent: "center", gap: 8, fontSize: 14 }}>
               <X size={16} /> Cancel
             </button>
           ) : (
-            <button
-              className="pb-btn pb-btn-primary"
-              onClick={runCaptureSequence}
-              style={{
-                width: "100%",
-                padding: "13px",
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                gap: 8,
-                fontSize: 14,
-              }}
-            >
+            <button className="pb-btn pb-btn-primary" onClick={runCaptureSequence} style={{ width: "100%", padding: "13px", display: "flex", alignItems: "center", justifyContent: "center", gap: 8, fontSize: 14 }}>
               <Sparkles size={16} /> Start capture
             </button>
           )}
         </div>
       </div>
 
-      {/* Filters panel */}
       <div
         className="pb-fadeup"
         style={{
@@ -294,16 +260,10 @@ export default function CaptureScreen({
           padding: 18,
           width: 170,
           maxWidth: "100%",
+          zIndex: 1,
         }}
       >
-        <div
-          style={{
-            fontSize: 11,
-            opacity: 0.6,
-            marginBottom: 10,
-            fontFamily: "ui-monospace, monospace",
-          }}
-        >
+        <div style={{ fontSize: 11, opacity: 0.6, marginBottom: 10, fontFamily: "ui-monospace, monospace" }}>
           FILTERS
         </div>
         <div style={{ display: "flex", flexDirection: "column", gap: 6 }}>
@@ -315,10 +275,7 @@ export default function CaptureScreen({
               disabled={isCapturingSeq}
               onClick={() => setFilterId(f.id)}
             >
-              <span
-                className="pb-filter-dot"
-                style={{ background: f.swatch }}
-              />
+              <span className="pb-filter-dot" style={{ background: f.swatch }} />
               {f.label}
             </button>
           ))}
